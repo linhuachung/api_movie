@@ -4,12 +4,13 @@
     "password": "130456",
     "database": "movie_api",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "serverPort": 3000
   },
-  "test": {
+  "staging": {
     "username": "root",
     "password": null,
-    "database": "database_test",
+    "database": "database_staging",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
