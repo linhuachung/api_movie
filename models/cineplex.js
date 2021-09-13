@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       logo: DataTypes.STRING(1000),
-      background: DataTypes.STRING(1000),
     },
     {
       sequelize,

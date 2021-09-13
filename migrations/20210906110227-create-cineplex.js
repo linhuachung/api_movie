@@ -14,9 +14,6 @@ module.exports = {
       logo: {
         type: Sequelize.STRING(1000),
       },
-      background: {
-        type: Sequelize.STRING(1000),
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
