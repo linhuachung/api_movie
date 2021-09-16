@@ -11,6 +11,14 @@ module.exports = {
       startTime: {
         type: Sequelize.DATE,
       },
+      movieId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Movies",
+          key: "id",
+        },
+      },
+
       cinemaId: {
         type: Sequelize.INTEGER,
         references: {

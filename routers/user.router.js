@@ -19,6 +19,29 @@ const {
 const { emailValidation } = require("../utils/validation");
 
 const userRouters = express.Router();
+
+// swagger
+
+/**
+ * @swagger
+ * tags:
+ *  name: QuanLyNguoiDung
+ * /api/user/getUser:
+ *
+ *  get:
+ *      tag: [MainData]
+ *      parameters:
+ *        -name: page_number
+ *        default: 1
+ *        in: query
+ *        schema:
+ *              type: integer
+ *      responses:
+ *            default:
+ *                code: 200
+ *                description: success
+ */
+
 // lấy danh sách user
 userRouters.get(
   "/getUser",
@@ -37,8 +60,8 @@ userRouters.get(
 // tạo user
 userRouters.post(
   "/createUser",
-  authenticate,
-  authorize("QuanTri"),
+  // authenticate,
+  // authorize("QuanTri"),
   async (req, res) => {
     try {
       const {
@@ -85,7 +108,17 @@ userRouters.post(
       );
       if (index === -1) {
         const user = await createUser(newUser);
-        res.send(user).status(RESPONSE_CODE.OK);
+        res
+          .send({
+            userName: user.userName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            role: user.role,
+            avatar: user.avatar,
+          })
+          .status(RESPONSE_CODE.OK);
       } else
         return res
           .status(RESPONSE_CODE.BAD_REQUEST)

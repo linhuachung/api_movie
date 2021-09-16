@@ -1,4 +1,4 @@
-const { Cinema, Cineplex, sequelize, Cinebox } = require("../models");
+const { Cinema, Cineplex, sequelize, Cinebox, Movie } = require("../models");
 const getCinemaList = () => {
   return Cinema.findAll();
 };
@@ -20,6 +20,16 @@ const getInfoCineplexById = (id) => {
     include: [{ model: Cinema }],
   });
 };
+const getMovieInCinemaById = (id) => {
+  return sequelize.query(`
+  select movies.name as movieName , movies.startDate, movies.poster, movies.banner,movies.evaluate,movies.trailer from movies
+  left join showtimes
+  on movies.id = showtimes.movieId
+  right join cinemas
+  on cinemas.id = showtimes.cinemaId
+  where cinemaId = ${id}
+  `);
+};
 
 module.exports = {
   getCinemaList,
@@ -27,4 +37,5 @@ module.exports = {
   getInfoCinemaBySearch,
   getInfoCineplex,
   getInfoCineplexById,
+  getMovieInCinemaById,
 };

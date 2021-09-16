@@ -29,7 +29,16 @@ authRouter.post("/login", async (req, res) => {
         .status(RESPONSE_CODE.BAD_REQUEST)
         .send("Password is not exist");
     const token = generateToken(user);
-    res.status(RESPONSE_CODE.OK).send({ user, token });
+    res.status(RESPONSE_CODE.OK).send({
+      userName: user.userName,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      avatar: user.avatar,
+      AccessToken: token,
+    });
   } catch (error) {
     console.log({ error });
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
@@ -73,7 +82,17 @@ authRouter.post("/register", async (req, res) => {
 
     if (index === -1) {
       const user = await registerUser(newUser);
-      res.send(user).status(RESPONSE_CODE.OK);
+      res
+        .send({
+          userName: user.userName,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          role: user.role,
+          avatar: user.avatar,
+        })
+        .status(RESPONSE_CODE.OK);
     } else
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)

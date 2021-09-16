@@ -6,9 +6,29 @@ const {
   getInfoCineplexById,
   getInfoCinemaById,
   getInfoCinemaBySearch,
+  getMovieInCinemaById,
 } = require("../controllers/cinema.controllers");
 
 const cinemaRouter = express.Router();
+
+/**
+ * @swagger
+ * tags:
+ *  name: QuanLyRap
+ * paths:
+ *  /api/user/getCinemaList:
+ *  get:
+ *      tag: [MainData]
+ *      parameters:
+ *        -name: page_number
+ *        default: 1
+ *        in: query
+ *        schema:
+ *              type: integer
+ *      responses:
+ *            default:
+ *                description: this is default
+ */
 
 cinemaRouter.get("/getCinemaList", async (req, res) => {
   try {
@@ -50,6 +70,19 @@ cinemaRouter.post("/searchCinema", async (req, res) => {
     const { searchData = "" } = req.query;
     const [cinema] = await getInfoCinemaBySearch(searchData);
     res.status(RESPONSE_CODE.OK).send(cinema);
+  } catch (e) {
+    console.log(e);
+    res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(e);
+  }
+});
+
+// Lấy danh sách phim từ rạp
+cinemaRouter.get("/getMovieListFromCinema=:id", async (req, res) => {
+  try {
+    const cinemaId = req.params.id;
+    const CinemaMovie = await getMovieInCinemaById(cinemaId);
+    console.log(CinemaMovie);
+    res.status(RESPONSE_CODE.OK).send({ movieList: CinemaMovie });
   } catch (e) {
     console.log(e);
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(e);

@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Cinebox, {
         foreignKey: "cinemaId",
       });
+      this.hasMany(models.Showtime, {
+        foreignKey: "cinemaId",
+      });
     }
   }
   Cinema.init(

@@ -10,17 +10,9 @@ module.exports = {
       },
       cinemaId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Cinemas",
-          key: "id",
-        },
       },
       movieId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Movies",
-          key: "id",
-        },
       },
       createdAt: {
         allowNull: false,
