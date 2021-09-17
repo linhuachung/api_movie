@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Showtime, {
         foreignKey: "showtimeId",
       });
+      this.belongsTo(models.Ticket, {
+        foreignKey: "ticketId",
+      });
     }
   }
   Seat.init(
@@ -21,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.INTEGER,
       type: DataTypes.STRING,
       showtimeId: DataTypes.INTEGER,
+      ticketId: DataTypes.INTEGER,
     },
     {
       sequelize,

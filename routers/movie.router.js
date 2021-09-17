@@ -103,9 +103,9 @@ movieRouters.post(
 );
 
 // Xóa phim
-movieRouters.delete("/deleteMovie=:id", async (req, res) => {
+movieRouters.delete("/deleteMovie/:id", async (req, res) => {
   try {
-    const movieId = req.params.id;
+    const movieId = +req.params.id;
 
     if (!movieId)
       return res.status(RESPONSE_CODE.BAD_REQUEST).send("invalid movie");
@@ -115,10 +115,11 @@ movieRouters.delete("/deleteMovie=:id", async (req, res) => {
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)
         .send(`Movie ${movieId} is not exist`);
+
     await deleteMovie(movieId);
+
     res.send(`Movie id: ${movieId} has been delete`).status(RESPONSE_CODE.OK);
   } catch (error) {
-    console.log(error);
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
   }
 });

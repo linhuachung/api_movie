@@ -1,6 +1,6 @@
-let seatData = [];
 const createDataSeat = (showtimeId) => {
-  for (let i = 1; i < 4; i++) {
+  let seatData = [];
+  for (let i = 1; i < 161; i++) {
     seatData.push({
       name: `${i}`,
       status: false,

@@ -1,4 +1,4 @@
-const { Movie } = require("../models");
+const { Movie, Showtime, Seat } = require("../models");
 
 const getListMovie = () => {
   return Movie.findAll();
@@ -9,8 +9,29 @@ const getMovieById = (id) => {
 const createMovie = (dataMovie) => {
   return Movie.create(dataMovie);
 };
-const deleteMovie = (movieId) => {
-  return Movie.destroy({
+const getShowtimeByMovie = (movieId) => {
+  return Showtime.findAll({
+    where: {
+      movieId: movieId,
+    },
+  });
+};
+const deleteMovie = async (movieId) => {
+  const showTimes = await getShowtimeByMovie(movieId);
+  for (let i = 0; i < showTimes.length; i++) {
+    Seat.destroy({
+      where: {
+        showtimeId: showTimes[i].id,
+      },
+    });
+  }
+  Showtime.destroy({
+    where: {
+      movieId: movieId,
+    },
+  });
+
+  Movie.destroy({
     where: {
       id: movieId,
     },

@@ -27,6 +27,13 @@ module.exports = {
           key: "id",
         },
       },
+      ticketId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Tickets",
+          key: "id",
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
