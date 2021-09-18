@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       poster: DataTypes.STRING(1000),
       banner: DataTypes.STRING(1000),
       trailer: DataTypes.STRING,
+      hot: DataTypes.BOOLEAN,
+      isStart: DataTypes.BOOLEAN,
     },
     {
       sequelize,

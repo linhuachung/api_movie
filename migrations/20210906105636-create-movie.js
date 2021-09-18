@@ -29,6 +29,12 @@ module.exports = {
       trailer: {
         type: Sequelize.STRING,
       },
+      hot: {
+        type: Sequelize.BOOLEAN,
+      },
+      isStart: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

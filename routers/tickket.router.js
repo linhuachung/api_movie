@@ -6,6 +6,7 @@ const {
   createSeatForShowTime,
   booking,
   updateSeat,
+  getSeatById,
 } = require("../controllers/ticket.controller");
 const {
   authorize,
@@ -54,6 +55,30 @@ ticketRouters.post(
     try {
       const userId = req.user.id;
       const { showtimeId, seatId } = req.body;
+      // check ghế
+      let checkSeat;
+      for (let i = 0; i < seatId.length; i++) {
+        if (seatId[i] > 160 || seatId[i] <= 0 || !seatId[i] === "")
+          return res
+            .status(RESPONSE_CODE.BAD_REQUEST)
+            .send("Thông tin đặt vé không hợp lệ");
+        checkSeat = await getSeatById(seatId[i]);
+      }
+      if (!showtimeId || !seatId)
+        return res
+          .status(RESPONSE_CODE.BAD_REQUEST)
+          .send("Vui lòng nhập thông tin để đặt ghế");
+
+      if (!checkSeat)
+        return res
+          .status(RESPONSE_CODE.BAD_REQUEST)
+          .send(`Ghế không tồn tại hoặc có người đặt, vui lòng chọn lại ghế`);
+      if (checkSeat.status === true)
+        return res
+          .status(RESPONSE_CODE.BAD_REQUEST)
+          .send(`Ghế đã có người đặt vui lòng chọn ghế khác`);
+
+      // Đặt ghế
       const dataShowTime = { showtimeId };
       const dataBooking = [
         {
@@ -70,8 +95,8 @@ ticketRouters.post(
         status: true,
         ticketId: arrTicketId,
       };
-      await updateSeat(seatData, +seatId);
-      res.status(RESPONSE_CODE.OK).send([data, seatData]);
+      await updateSeat(seatData, seatId);
+      res.status(RESPONSE_CODE.OK).send("Đặt thành công");
     } catch (error) {
       console.log(error);
       res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);

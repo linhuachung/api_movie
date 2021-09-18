@@ -1,4 +1,4 @@
-const { Movie, Showtime, Seat } = require("../models");
+const { Movie, Showtime, Seat, sequelize } = require("../models");
 
 const getListMovie = () => {
   return Movie.findAll();
@@ -46,10 +46,17 @@ const updateMovie = (movieId, data) => {
   });
 };
 
+const searchMovie = (data) => {
+  return sequelize.query(`
+  SELECT * FROM movies  WHERE name LIKE "%${data}%"
+  `);
+};
+
 module.exports = {
   getListMovie,
   getMovieById,
   createMovie,
   deleteMovie,
   updateMovie,
+  searchMovie,
 };

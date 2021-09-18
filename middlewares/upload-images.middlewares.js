@@ -15,36 +15,29 @@ const uploadAvatarUserMiddleWare = () => {
   return upload.single("avatar");
 };
 
-const uploadPosterMovieMiddleWare = () => {
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "./public/images/MoviePoster");
-    },
-    filename: (req, file, cb) => {
-      cb(null, `${getTimeStampMilliSecond()}_${file.originalname}`);
-    },
-  });
-
-  const upload = multer({ storage });
-  return upload.single("poster");
-};
-
-const uploadBannerMovieMiddleWare = () => {
+const uploadImageMovieMiddleWare = () => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "./public/images/MovieBanner");
     },
     filename: (req, file, cb) => {
-      cb(null, `${getTimeStampMilliSecond()}_${file.originalname}`);
+      cb(null, `${Date.now()}_${file.originalname}`);
     },
   });
-
   const upload = multer({ storage });
-  return upload.single("banner");
+  return upload.fields([
+    {
+      name: "banner",
+      maxCount: 1,
+    },
+    {
+      name: "poster",
+      maxCount: 1,
+    },
+  ]);
 };
 
 module.exports = {
   uploadAvatarUserMiddleWare,
-  uploadPosterMovieMiddleWare,
-  uploadBannerMovieMiddleWare,
+  uploadImageMovieMiddleWare,
 };

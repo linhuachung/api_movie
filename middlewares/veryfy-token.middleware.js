@@ -9,13 +9,17 @@ const authenticate = (req, res, next) => {
 
     const decode = jwt.verify(token, secretKey);
     if (decode.exp < getTimeStampSecond()) {
-      return res.status(RESPONSE_CODE.FORBIDDEN).send("Token is expired");
+      return res
+        .status(RESPONSE_CODE.FORBIDDEN)
+        .send("Phiên làm việc hết hạn vui lòng đăng nhập lại");
     }
     const { id, userName, email, role } = decode;
     req.user = { id, userName, email, role };
     next();
   } catch (error) {
-    res.status(RESPONSE_CODE.BAD_REQUEST).send("Token is not allowed");
+    res
+      .status(RESPONSE_CODE.BAD_REQUEST)
+      .send("Vui lòng đăng nhập để tiếp tục");
   }
 };
 
@@ -26,7 +30,9 @@ const authorize =
     const { role } = user;
     const index = arrRole.findIndex((_role) => _role === role);
     if (index === -1)
-      return res.status(RESPONSE_CODE.FORBIDDEN).send("You are not allowed");
+      return res
+        .status(RESPONSE_CODE.FORBIDDEN)
+        .send("Bạn không thể thực hiện chức năng này");
     next();
   };
 

@@ -6,10 +6,15 @@ const {
   deleteMovie,
   getMovieById,
   updateMovie,
+  searchMovie,
 } = require("../controllers/movie.controllers");
 const {
-  uploadBannerMovieMiddleWare,
+  uploadImageMovieMiddleWare,
 } = require("../middlewares/upload-images.middlewares");
+const {
+  authenticate,
+  authorize,
+} = require("../middlewares/veryfy-token.middleware");
 const { dateValidation } = require("../utils/validation");
 const movieRouters = express.Router();
 
@@ -29,7 +34,7 @@ movieRouters.get("/getMovieById=:id", async (req, res) => {
     const movieId = req.params.id;
 
     if (!movieId)
-      return res.status(RESPONSE_CODE.BAD_REQUEST).send("invalid movie");
+      return res.status(RESPONSE_CODE.BAD_REQUEST).send("Phim không hợp lệ");
 
     const movie = await getMovieById(movieId);
     if (!movie)
@@ -49,15 +54,21 @@ movieRouters.get("/getMovieById=:id", async (req, res) => {
 // Tạo Phim
 movieRouters.post(
   "/createMovie",
-  uploadBannerMovieMiddleWare(),
+  authenticate,
+  authorize("QuanTri"),
+  uploadImageMovieMiddleWare(),
   async (req, res) => {
     try {
-      const { name, startDate, time, evaluate, poster, banner, trailer } =
-        req.body;
-      const { file } = req;
-
-      const posterMovie = "http://localhost:3000/" + file.path;
-      const bannerMovie = "http://localhost:3000/" + file.path;
+      const { name, startDate, time, evaluate, trailer } = req.body;
+      let file = req.files;
+      let posterImg = file.poster.map((item) => {
+        return item.path;
+      });
+      let bannerImg = file.banner.map((item) => {
+        return item.path;
+      });
+      const posterMovie = "http://localhost:3000/" + posterImg;
+      const bannerMovie = "http://localhost:3000/" + bannerImg;
       const dataMovie = {
         name,
         startDate,
@@ -70,19 +81,21 @@ movieRouters.post(
       // validation giá trị
 
       if (dataMovie.name.trim() === "")
-        return res.status(400).send("Invalid movie name");
+        return res.status(400).send("Tên phim không hợp lệ");
       if (!dateValidation.test(dataMovie.startDate))
-        return res.status(400).send("Invalid startDate");
+        return res
+          .status(400)
+          .send("StartDate sai định dạng, định dạng hợp lệ: YYYY-MM-DD");
       if (/\D/.test(dataMovie.time))
-        return res.status(400).send("Invalid time");
+        return res.status(400).send("Thời lượng phim không hợp lệ");
       if (/\D/.test(dataMovie.evaluate))
-        return res.status(400).send("Invalid evaluate");
+        return res.status(400).send("Đánh giá phim không hợp lệ");
       if (dataMovie.poster.trim() === "")
-        return res.status(400).send("Invalid poster");
+        return res.status(400).send("Poster phim sai định dạng");
       if (dataMovie.banner.trim() === "")
-        return res.status(400).send("Invalid banner");
+        return res.status(400).send("Banner phim sai định dạng");
       if (dataMovie.trailer.trim() === "")
-        return res.status(400).send("Invalid trailer");
+        return res.status(400).send("Trailer phim không hợp lệ");
 
       const movieList = await createMovie(dataMovie);
       res.status(RESPONSE_CODE.OK).send({
@@ -103,41 +116,52 @@ movieRouters.post(
 );
 
 // Xóa phim
-movieRouters.delete("/deleteMovie/:id", async (req, res) => {
-  try {
-    const movieId = +req.params.id;
+movieRouters.delete(
+  "/deleteMovie/:id",
+  authenticate,
+  authorize("QuanTri"),
+  async (req, res) => {
+    try {
+      const movieId = +req.params.id;
 
-    if (!movieId)
-      return res.status(RESPONSE_CODE.BAD_REQUEST).send("invalid movie");
+      if (!movieId)
+        return res.status(RESPONSE_CODE.BAD_REQUEST).send("Phim không hợp lệ");
 
-    const movie = await getMovieById(movieId);
-    if (!movie)
-      return res
-        .status(RESPONSE_CODE.BAD_REQUEST)
-        .send(`Movie ${movieId} is not exist`);
+      const movie = await getMovieById(movieId);
+      if (!movie)
+        return res
+          .status(RESPONSE_CODE.BAD_REQUEST)
+          .send(`Movie ${movieId} is not exist`);
 
-    await deleteMovie(movieId);
+      await deleteMovie(movieId);
 
-    res.send(`Movie id: ${movieId} has been delete`).status(RESPONSE_CODE.OK);
-  } catch (error) {
-    res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
+      res.send(`Movie id: ${movieId} has been delete`).status(RESPONSE_CODE.OK);
+    } catch (error) {
+      res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
+    }
   }
-});
+);
 
 // Cập nhật phim
 movieRouters.post(
   "/updateMove=:id",
-  uploadBannerMovieMiddleWare(),
+  authenticate,
+  authorize("QuanTri"),
+  uploadImageMovieMiddleWare(),
   async (req, res) => {
     try {
       const movieId = req.params.id;
-      const { name, startDate, time, evaluate, poster, banner, trailer } =
-        req.body;
+      const { name, startDate, time, evaluate, trailer } = req.body;
 
-      const { file } = req;
-
-      const posterMovie = "http://localhost:3000/" + file.path;
-      const bannerMovie = "http://localhost:3000/" + file.path;
+      let file = req.files;
+      let posterImg = file.poster.map((item) => {
+        return item.path;
+      });
+      let bannerImg = file.banner.map((item) => {
+        return item.path;
+      });
+      const posterMovie = "http://localhost:3000/" + posterImg;
+      const bannerMovie = "http://localhost:3000/" + bannerImg;
       const dataMovie = {
         name,
         startDate,
@@ -149,7 +173,7 @@ movieRouters.post(
       };
 
       if (!movieId)
-        return res.status(RESPONSE_CODE.BAD_REQUEST).send("invalid movie");
+        return res.status(RESPONSE_CODE.BAD_REQUEST).send("Phim không hợp lệ");
       const movie = await getMovieById(movieId);
       if (!movie)
         return res
@@ -159,28 +183,39 @@ movieRouters.post(
       // validation giá trị
 
       if (dataMovie.name.trim() === "")
-        return res.status(400).send("Invalid movie name");
-      // if (!dateValidation.test(dataMovie.startDate))
-      //   return res.status(400).send("Invalid startDate");
+        return res.status(400).send("Tên phim không hợp lệ");
+      if (!dateValidation.test(dataMovie.startDate))
+        return res.status(400).send("StartDate sai định dạng");
       if (/\D/.test(dataMovie.time))
-        return res.status(400).send("Invalid time");
+        return res.status(400).send("Thời lượng phim không hợp lệ");
       if (/\D/.test(dataMovie.evaluate))
-        return res.status(400).send("Invalid evaluate");
+        return res.status(400).send("Đánh giá phim không hợp lệ");
       if (dataMovie.poster.trim() === "")
-        return res.status(400).send("Invalid poster");
+        return res.status(400).send("Poster phim sai định dạng");
       if (dataMovie.banner.trim() === "")
-        return res.status(400).send("Invalid banner");
+        return res.status(400).send("Banner phim sai định dạng");
       if (dataMovie.trailer.trim() === "")
-        return res.status(400).send("Invalid trailer");
+        return res.status(400).send("Trailer phim không hợp lệ");
 
       await updateMovie(movieId, dataMovie);
-      res.status(RESPONSE_CODE.OK).send("Movie has been Update:");
+      res.status(RESPONSE_CODE.OK).send("Cập nhật phim thành công");
     } catch (error) {
       console.log(error);
       res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
     }
   }
 );
+
+// Tìm phim theo name
+movieRouters.post("/searchMovie", async (req, res) => {
+  try {
+    const { movieName = "" } = req.query;
+    const [movie] = await searchMovie(movieName);
+    res.send(movie).status(RESPONSE_CODE.OK);
+  } catch (error) {
+    res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
+  }
+});
 
 module.exports = {
   movieRouters,

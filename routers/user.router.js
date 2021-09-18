@@ -60,8 +60,8 @@ userRouters.get(
 // tạo user
 userRouters.post(
   "/createUser",
-  // authenticate,
-  // authorize("QuanTri"),
+  authenticate,
+  authorize("QuanTri"),
   async (req, res) => {
     try {
       const {

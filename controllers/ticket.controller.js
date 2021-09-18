@@ -9,7 +9,9 @@ const getShowTimeList = (showTimeId) => {
 const createShowTimeController = (data) => {
   return Showtime.create(data);
 };
-
+const getSeatById = async (arrSeatId) => {
+  return Seat.findByPk(arrSeatId);
+};
 const createSeatForShowTime = (data) => {
   return Seat.bulkCreate(data);
 };
@@ -18,8 +20,6 @@ const booking = (data) => {
   return Ticket.bulkCreate(data);
 };
 const updateSeat = (dataUpdate, seatId) => {
-  console.log("dataUpdate: ", dataUpdate);
-  console.log("seatId: ", seatId);
   return Seat.update(dataUpdate, {
     where: {
       id: seatId,
@@ -32,4 +32,5 @@ module.exports = {
   getShowTimeList,
   booking,
   updateSeat,
+  getSeatById,
 };

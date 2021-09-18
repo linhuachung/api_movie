@@ -17,17 +17,17 @@ authRouter.post("/login", async (req, res) => {
     if (!userName || !password)
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)
-        .send("userName or Password is required");
+        .send("Vui lòng nhập tài khoản hoặc mật khẩu");
     const user = await getUserByUserName(userName);
     if (!user)
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)
-        .send("UserName is not exist");
+        .send("Tài khoản không không hợp lệ");
     const checkPassword = bcryptjs.compareSync(password, user.password);
     if (!checkPassword)
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)
-        .send("Password is not exist");
+        .send("Mật khẩu không hợp lệ");
     const token = generateToken(user);
     res.status(RESPONSE_CODE.OK).send({
       userName: user.userName,
@@ -68,11 +68,17 @@ authRouter.post("/register", async (req, res) => {
 
     // validation giá trị
     if (newUser.userName.length < 4 || newUser.userName.trim() === "")
-      return res.status(400).send("Username is invalid");
+      return res
+        .status(400)
+        .send("Tài khoản không hợp lệ, xin vui lòng nhập lại tài khoản");
     if (!emailValidation.test(newUser.email))
-      return res.status(400).send("Email is invalid");
+      return res
+        .status(400)
+        .send("Email không hợp lệ, vui lòng nhập lại Email");
     if (newUser.password.length < 4 || newUser.password.trim() === "")
-      return res.status(400).send("Password is invalid");
+      return res
+        .status(400)
+        .send("Mật khẩu không hợp lệ, xin vui lòng nhập lại mật khẩu");
     newUser.password = hashPassword;
     const userList = await getListUser();
 
@@ -96,7 +102,7 @@ authRouter.post("/register", async (req, res) => {
     } else
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)
-        .send("UserName has been exist");
+        .send("Tài khoản đã tồn tại, vui lòng nhập tài khoản khác");
   } catch (error) {
     console.log(error);
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
