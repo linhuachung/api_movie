@@ -34,9 +34,9 @@ ticketRouters.post("/createShowTime", async (req, res) => {
 
 // get showtime by Id
 
-ticketRouters.get("/getShowTime=:id", async (req, res) => {
+ticketRouters.get("/getShowTime", async (req, res) => {
   try {
-    const showTimeId = req.params.id;
+    const { showTimeId = "" } = req.query;
     const data = await getShowTimeList(showTimeId);
     res.status(RESPONSE_CODE.OK).send(data);
   } catch (error) {

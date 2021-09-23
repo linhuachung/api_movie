@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, sequelize } = require("../models");
 
 const getListUser = () => {
   return User.findAll();
@@ -44,6 +44,12 @@ const registerUser = (newUser) => {
   return User.create(newUser);
 };
 
+const searchUser = (data) => {
+  return sequelize.query(`
+  SELECT * FROM users  WHERE userName LIKE "%${data}%"
+  `);
+};
+
 module.exports = {
   getListUser,
   createUser,
@@ -53,4 +59,5 @@ module.exports = {
   getUserByUserName,
   uploadAvatarUser,
   registerUser,
+  searchUser,
 };

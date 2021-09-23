@@ -19,10 +19,10 @@ cinemaRouter.get("/getCinemaList", async (req, res) => {
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(e);
   }
 });
-cinemaRouter.get("/getCinemaById=:id", async (req, res) => {
+cinemaRouter.get("/getCinemaById", async (req, res) => {
   try {
-    const id = req.params.id;
-    const cinema = await getInfoCinemaById(id);
+    const { cinemaId = "" } = req.query;
+    const cinema = await getInfoCinemaById(cinemaId);
     res.status(RESPONSE_CODE.OK).send(cinema);
   } catch (e) {
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(e);
@@ -37,10 +37,10 @@ cinemaRouter.get("/getInfoCineplex", async (req, res) => {
   }
 });
 
-cinemaRouter.get("/getInfoCineplexById=:id", async (req, res) => {
+cinemaRouter.get("/getInfoCineplexById", async (req, res) => {
   try {
-    const id = req.params.id;
-    const cineplexList = await getInfoCineplexById(id);
+    const { cineplexId = "" } = req.query;
+    const cineplexList = await getInfoCineplexById(cineplexId);
     res.status(RESPONSE_CODE.OK).send(cineplexList);
   } catch (e) {
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(e);
@@ -58,9 +58,9 @@ cinemaRouter.post("/searchCinema", async (req, res) => {
 });
 
 // Lấy danh sách phim từ rạp
-cinemaRouter.get("/getMovieListFromCinema=:id", async (req, res) => {
+cinemaRouter.get("/getMovieListFromCinema", async (req, res) => {
   try {
-    const cinemaId = req.params.id;
+    const { cinemaId = "" } = req.query;
     const CinemaMovie = await getMovieInCinemaById(cinemaId);
     console.log(CinemaMovie);
     res.status(RESPONSE_CODE.OK).send({ movieList: CinemaMovie });

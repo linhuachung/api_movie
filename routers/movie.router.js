@@ -29,9 +29,9 @@ movieRouters.get("/getListMovie", async (req, res) => {
 });
 
 // Tìm phim theo id
-movieRouters.get("/getMovieById=:id", async (req, res) => {
+movieRouters.get("/getMovieById", async (req, res) => {
   try {
-    const movieId = req.params.id;
+    const { movieId = "" } = req.query;
 
     if (!movieId)
       return res.status(RESPONSE_CODE.BAD_REQUEST).send("Phim không hợp lệ");
@@ -117,13 +117,12 @@ movieRouters.post(
 
 // Xóa phim
 movieRouters.delete(
-  "/deleteMovie/:id",
+  "/deleteMovie",
   authenticate,
   authorize("QuanTri"),
   async (req, res) => {
     try {
-      const movieId = +req.params.id;
-
+      const { movieId = "" } = req.query;
       if (!movieId)
         return res.status(RESPONSE_CODE.BAD_REQUEST).send("Phim không hợp lệ");
 
@@ -144,13 +143,13 @@ movieRouters.delete(
 
 // Cập nhật phim
 movieRouters.post(
-  "/updateMove=:id",
+  "/updateMovie",
   authenticate,
   authorize("QuanTri"),
   uploadImageMovieMiddleWare(),
   async (req, res) => {
     try {
-      const movieId = req.params.id;
+      const { movieId = "" } = req.query;
       const { name, startDate, time, evaluate, trailer } = req.body;
 
       let file = req.files;

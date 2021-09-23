@@ -26,7 +26,7 @@ const options = {
     ],
     components: {},
   },
-  apis: ["./test.yaml"],
+  apis: ["./index.yaml"],
 };
 
 app.use("/api", rootRouter);

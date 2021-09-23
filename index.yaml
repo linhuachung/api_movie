@@ -28,7 +28,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/ticket/getShowTime=:id":
+  "/api/ticket/getShowTime":
     get:
       tags:
         - QuanLyDatVe
@@ -45,7 +45,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyDatVe/TaoLichChieu":
+  "/api/ticket/createShowTime":
     post:
       tags:
         - QuanLyDatVe
@@ -70,18 +70,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/LayDanhSachLoaiNguoiDung":
-    get:
-      tags:
-        - QuanLyNguoiDung
-      operationId: LayDanhSachLoaiNguoiDung
-      consumes: []
-      produces: []
-      parameters: []
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyNguoiDung/DangNhap":
+  "/api/author/login":
     post:
       tags:
         - QuanLyNguoiDung
@@ -93,7 +82,7 @@ paths:
         - application/*+json
       produces: []
       parameters:
-        - name: ndDN
+        - name: user
           in: body
           required: false
           schema:
@@ -101,7 +90,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/DangKy":
+  "/api/author/register":
     post:
       tags:
         - QuanLyNguoiDung
@@ -113,15 +102,15 @@ paths:
         - application/*+json
       produces: []
       parameters:
-        - name: nd
+        - name: user
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/NguoiDung_VM"
+            "$ref": "#/definitions/newUser"
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/LayDanhSachNguoiDung":
+  "/api/user/getUser":
     get:
       tags:
         - QuanLyNguoiDung
@@ -129,20 +118,15 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: MaNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-        - name: tuKhoa
-          in: query
-          required: false
+        - name: AccessToken
+          in: header
+          required: true
           type: string
           default: ""
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/LayDanhSachNguoiDungPhanTrang":
+  "/api/user/paginationUserList":
     get:
       tags:
         - QuanLyNguoiDung
@@ -150,94 +134,19 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: MaNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-        - name: tuKhoa
-          in: query
-          required: false
-          type: string
-          default: ""
-        - name: soTrang
+        - name: page
           in: query
           required: false
           type: integer
           format: int32
           default: 1
-        - name: soPhanTuTrenTrang
+        - name: limit
           in: query
           required: false
           type: integer
           format: int32
           default: 20
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyNguoiDung/TimKiemNguoiDung":
-    get:
-      tags:
-        - QuanLyNguoiDung
-      operationId: TimKiemNguoiDung
-      consumes: []
-      produces: []
-      parameters:
-        - name: MaNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-        - name: tuKhoa
-          in: query
-          required: false
-          type: string
-          default: ""
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyNguoiDung/TimKiemNguoiDungPhanTrang":
-    get:
-      tags:
-        - QuanLyNguoiDung
-      operationId: TimKiemNguoiDungPhanTrang
-      consumes: []
-      produces: []
-      parameters:
-        - name: MaNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-        - name: tuKhoa
-          in: query
-          required: false
-          type: string
-          default: ""
-        - name: soTrang
-          in: query
-          required: false
-          type: integer
-          format: int32
-          default: 1
-        - name: soPhanTuTrenTrang
-          in: query
-          required: false
-          type: integer
-          format: int32
-          default: 1
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyNguoiDung/ThongTinTaiKhoan":
-    post:
-      tags:
-        - QuanLyNguoiDung
-      operationId: ThongTinTaiKhoan
-      consumes: []
-      produces: []
-      parameters:
-        - name: Authorization
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -245,7 +154,47 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/ThemNguoiDung":
+  "/api/user/searchUser":
+    post:
+      tags:
+        - QuanLyNguoiDung
+      operationId: TimKiemNguoiDung
+      consumes: []
+      produces: []
+      parameters:
+        - name: userName
+          in: query
+          required: false
+          type: string
+        - name: AccessToken
+          in: header
+          description: access token
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+  "/api/user/getUserByUserName":
+    post:
+      tags:
+        - QuanLyNguoiDung
+      operationId: ThongTinTaiKhoan
+      consumes: []
+      produces: []
+      parameters:
+        - name: findUserName
+          in: query
+          required: true
+          # type: string
+        - name: AccessToken
+          in: header
+          description: access token
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+  "/api/user/createUser":
     post:
       tags:
         - QuanLyNguoiDung
@@ -257,12 +206,12 @@ paths:
         - application/*+json
       produces: []
       parameters:
-        - name: nd
+        - name: newUser
           in: body
           required: false
           schema:
             "$ref": "#/definitions/NguoiDungVM"
-        - name: Authorization
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -270,7 +219,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung":
+  "/api/user/updateUserByUsername":
     put:
       tags:
         - QuanLyNguoiDung
@@ -319,7 +268,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyNguoiDung/XoaNguoiDung":
+  "/api/user/deleteUser":
     delete:
       tags:
         - QuanLyNguoiDung
@@ -327,11 +276,11 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: TaiKhoan
+        - name: findUserName
           in: query
           required: false
           type: string
-        - name: Authorization
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -339,18 +288,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyPhim/LayDanhSachBanner":
-    get:
-      tags:
-        - QuanLyPhim
-      operationId: LayDanhSachBanner
-      consumes: []
-      produces: []
-      parameters: []
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyPhim/LayDanhSachPhim":
+  "/api/movie/getListMovie":
     get:
       tags:
         - QuanLyPhim
@@ -358,20 +296,15 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: maNhom
-          in: query
-          required: false
+        - name: AccessToken
+          in: header
+          description: access token
+          required: true
           type: string
-          default: GP01
-        - name: tenPhim
-          in: query
-          required: false
-          type: string
-          default: ""
       responses:
         "200":
           description: Success
-  "/api/QuanLyPhim/LayDanhSachPhimPhanTrang":
+  "/api/movie/paginationMovieList":
     get:
       tags:
         - QuanLyPhim
@@ -379,23 +312,13 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: maNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-        - name: tenPhim
-          in: query
-          required: false
-          type: string
-          default: ""
-        - name: soTrang
+        - name: page
           in: query
           required: false
           type: integer
           format: int32
           default: 1
-        - name: soPhanTuTrenTrang
+        - name: limit
           in: query
           required: false
           type: integer
@@ -404,50 +327,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyPhim/LayDanhSachPhimTheoNgay":
-    get:
-      tags:
-        - QuanLyPhim
-      operationId: LayDanhSachPhimTheoNgay
-      consumes: []
-      produces: []
-      parameters:
-        - name: maNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-        - name: tenPhim
-          in: query
-          required: false
-          type: string
-          default: ""
-        - name: soTrang
-          in: query
-          required: false
-          type: integer
-          format: int32
-          default: 1
-        - name: soPhanTuTrenTrang
-          in: query
-          required: false
-          type: integer
-          format: int32
-          default: 10
-        - name: tuNgay
-          in: query
-          required: false
-          type: string
-          default: ""
-        - name: denNgay
-          in: query
-          required: false
-          type: string
-          default: ""
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyPhim/ThemPhimUploadHinh":
+  "/api/movie/createMovie":
     post:
       tags:
         - QuanLyPhim
@@ -466,7 +346,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyPhim/CapNhatPhimUpload":
+  "/api/movie/updateMove":
     post:
       tags:
         - QuanLyPhim
@@ -475,14 +355,22 @@ paths:
         - multipart/form-data
       produces: []
       parameters:
-        - name: frm
+        - name: movieId
+          in: query
+          required: true
+          type: string
+        - name: fileUpload
+          in: formData
+          required: false
+          type: file
+        - name: dataMovie
           in: formData
           required: false
           type: array
           items: {}
           collectionFormat: multi
           uniqueItems: false
-        - name: Authorization
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -490,57 +378,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyPhim":
-    post:
-      tags:
-        - QuanLyPhim
-      operationId: UploadHinhAnh
-      consumes:
-        - multipart/form-data
-      produces:
-        - text/plain
-        - application/json
-        - text/json
-      parameters:
-        - name: file
-          in: formData
-          required: false
-          type: file
-        - name: tenPhim
-          in: query
-          required: false
-          type: string
-        - name: maNhom
-          in: query
-          required: false
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            type: string
-  "/api/QuanLyPhim/XP":
-    delete:
-      tags:
-        - QuanLyPhim
-      operationId: XP
-      consumes: []
-      produces: []
-      parameters:
-        - name: MaPhim
-          in: query
-          required: false
-          type: integer
-          format: int32
-        - name: Authorization
-          in: header
-          description: access token
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-  "/api/QuanLyPhim/XoaPhim":
+  "/api/movie/deleteMovie":
     delete:
       tags:
         - QuanLyPhim
@@ -548,12 +386,12 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: MaPhim
+        - name: movieId
           in: query
           required: false
           type: integer
           format: int32
-        - name: Authorization
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -561,7 +399,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyPhim/LayThongTinPhim":
+  "/api/movie/getMovieById":
     get:
       tags:
         - QuanLyPhim
@@ -569,7 +407,7 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: MaPhim
+        - name: movieId
           in: query
           required: false
           type: integer
@@ -578,7 +416,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyRap/LayThongTinHeThongRap":
+  "/api/cinema/getCinemaById":
     get:
       tags:
         - QuanLyRap
@@ -586,7 +424,7 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: maHeThongRap
+        - name: cinemaId
           in: query
           required: false
           type: string
@@ -594,7 +432,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyRap/LayThongTinCumRapTheoHeThong":
+  "/api/cinema/getInfoCineplex":
     get:
       tags:
         - QuanLyRap
@@ -602,7 +440,7 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: maHeThongRap
+        - name: cineplexId
           in: query
           required: false
           type: string
@@ -610,7 +448,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyRap/LayThongTinLichChieuHeThongRap":
+  "/api/cinema/LayThongTinLichChieuHeThongRap":
     get:
       tags:
         - QuanLyRap
@@ -631,7 +469,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/QuanLyRap/LayThongTinLichChieuPhim":
+  "/api/cinema/getMovieListFromCinema":
     get:
       tags:
         - QuanLyRap
@@ -639,7 +477,7 @@ paths:
       consumes: []
       produces: []
       parameters:
-        - name: MaPhim
+        - name: cinemaId
           in: query
           required: false
           type: integer
@@ -678,41 +516,43 @@ definitions:
   ThongTinDangNhapVM:
     type: object
     properties:
-      taiKhoan:
+      userName:
         type: string
-      matKhau:
+      password:
         type: string
-  NguoiDung_VM:
+  newUser:
     type: object
     properties:
-      taiKhoan:
+      userName:
         type: string
-      matKhau:
+      firstName:
+        type: string
+      lastName:
         type: string
       email:
         type: string
-      soDt:
+      phoneNumber:
         type: string
-      maNhom:
-        type: string
-      hoTen:
+      password:
         type: string
   NguoiDungVM:
     type: object
     properties:
-      taiKhoan:
+      userName:
         type: string
-      matKhau:
+      firstName:
+        type: string
+      lastName:
         type: string
       email:
         type: string
-      soDt:
+      phoneNumber:
         type: string
-      maNhom:
+      password:
         type: string
-      maLoaiNguoiDung:
+      role:
         type: string
-      hoTen:
+      avatar:
         type: string
   KeyValuePair[String,StringValues]:
     type: object

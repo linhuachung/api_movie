@@ -4,7 +4,7 @@ const { getTimeStampSecond } = require("../utils/date");
 
 const authenticate = (req, res, next) => {
   try {
-    const token = req.header("token");
+    const token = req.header("AccessToken");
     const secretKey = "movie-api";
 
     const decode = jwt.verify(token, secretKey);

@@ -65,7 +65,6 @@ authRouter.post("/register", async (req, res) => {
       role: "KhachHang",
       avatar: "",
     };
-
     // validation giá trị
     if (newUser.userName.length < 4 || newUser.userName.trim() === "")
       return res
