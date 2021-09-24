@@ -1,26 +1,26 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
   version: v1
   title: My API
 paths:
-  "/api/ticket/booking":
+  /api/ticket/booking:
     post:
       tags:
         - QuanLyDatVe
       operationId: DatVe
       consumes:
-        - application/json-patch+json
-        - json
-        - text/json
-        - application/*+json
-      produces: []
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
       parameters:
         - name: DanhSachVe
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/DanhSachVeDat"
-        - name: token
+            $ref: "#/definitions/DanhSachVeDat"
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -28,7 +28,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/ticket/getShowTime":
+  /api/ticket/getShowTime:
     get:
       tags:
         - QuanLyDatVe
@@ -39,29 +39,26 @@ paths:
         - name: showTimeId
           in: query
           required: false
-          type: integer
-          format: int32
-          default: 0
       responses:
         "200":
           description: Success
-  "/api/ticket/createShowTime":
+  /api/ticket/createShowTime:
     post:
       tags:
         - QuanLyDatVe
       operationId: TaoLichChieu
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
-      produces: []
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
       parameters:
         - name: lich
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/LichChieuInsert"
+            $ref: "#/definitions/LichChieuInsert"
         - name: Authorization
           in: header
           description: access token
@@ -70,47 +67,47 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/author/login":
+  /api/author/login:
     post:
       tags:
         - QuanLyNguoiDung
       operationId: DangNhap
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
-      produces: []
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
       parameters:
         - name: user
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/ThongTinDangNhapVM"
+            $ref: "#/definitions/ThongTinDangNhapVM"
       responses:
         "200":
           description: Success
-  "/api/author/register":
+  /api/author/register:
     post:
       tags:
         - QuanLyNguoiDung
-      operationId: DangKy
+      operationId: register
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
-      produces: []
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
       parameters:
-        - name: user
+        - name: newUser
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/newUser"
+            $ref: "#/definitions/newUser"
       responses:
         "200":
           description: Success
-  "/api/user/getUser":
+  /api/user/getUser:
     get:
       tags:
         - QuanLyNguoiDung
@@ -126,7 +123,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/user/paginationUserList":
+  /api/user/paginationUserList:
     get:
       tags:
         - QuanLyNguoiDung
@@ -154,7 +151,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/user/searchUser":
+  /api/user/searchUser:
     post:
       tags:
         - QuanLyNguoiDung
@@ -174,8 +171,8 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/user/getUserByUserName":
-    post:
+  /api/user/getUserByUserName:
+    get:
       tags:
         - QuanLyNguoiDung
       operationId: ThongTinTaiKhoan
@@ -185,7 +182,6 @@ paths:
         - name: findUserName
           in: query
           required: true
-          # type: string
         - name: AccessToken
           in: header
           description: access token
@@ -194,23 +190,23 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/user/createUser":
+  /api/user/createUser:
     post:
       tags:
         - QuanLyNguoiDung
       operationId: ThemNguoiDung
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
-      produces: []
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
       parameters:
         - name: newUser
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/NguoiDungVM"
+            $ref: "#/definitions/NguoiDungVM"
         - name: AccessToken
           in: header
           description: access token
@@ -219,23 +215,23 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/user/updateUserByUsername":
+  /api/user/updateUserByUsername:
     put:
       tags:
         - QuanLyNguoiDung
       operationId: CapNhatThongTinNguoiDung
       consumes:
-        - application/json-patch+json
         - application/json
-        - text/json
-        - application/*+json
-      produces: []
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
       parameters:
-        - name: nd
+        - name: newUserUpdate
           in: body
           required: false
           schema:
-            "$ref": "#/definitions/NguoiDungVM"
+            $ref: "#/definitions/NguoiDungVM"
         - name: Authorization
           in: header
           description: access token
@@ -244,23 +240,19 @@ paths:
       responses:
         "200":
           description: Success
+  /api/user/avatar:
     post:
       tags:
         - QuanLyNguoiDung
-      operationId: CapNhat
+      operationId: AvatarUser
       consumes:
-        - application/json-patch+json
-        - application/json
-        - text/json
-        - application/*+json
-      produces: []
+        - multipart/form-data
       parameters:
-        - name: nd
-          in: body
+        - name: avatar
+          in: formData
           required: false
-          schema:
-            "$ref": "#/definitions/NguoiDungVM"
-        - name: Authorization
+          type: file
+        - name: AccessToken
           in: header
           description: access token
           required: true
@@ -268,7 +260,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/user/deleteUser":
+  /api/user/deleteUser:
     delete:
       tags:
         - QuanLyNguoiDung
@@ -288,7 +280,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/movie/getListMovie":
+  /api/movie/getListMovie:
     get:
       tags:
         - QuanLyPhim
@@ -304,7 +296,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/movie/paginationMovieList":
+  /api/movie/paginationMovieList:
     get:
       tags:
         - QuanLyPhim
@@ -327,58 +319,97 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/movie/createMovie":
+  /api/movie/createMovie:
     post:
       tags:
         - QuanLyPhim
       operationId: ThemPhimUploadHinh
       consumes:
         - multipart/form-data
-      produces: []
       parameters:
-        - name: frm
+        - name: name
           in: formData
-          required: false
-          type: array
-          items: {}
-          collectionFormat: multi
-          uniqueItems: false
+          required: true
+          type: string
+        - name: startDate
+          in: formData
+          required: true
+          type: string
+        - name: time
+          in: formData
+          required: true
+          type: string
+        - name: evaluate
+          in: formData
+          required: true
+          type: integer
+        - name: poster
+          in: formData
+          required: true
+          type: file
+        - name: banner
+          in: formData
+          required: true
+          type: file
+        - name: trailer
+          in: formData
+          required: true
+          type: string
+        - name: AccessToken
+          in: header
+          required: true
+          type: string
       responses:
         "200":
           description: Success
-  "/api/movie/updateMove":
-    post:
+  /api/movie/updateMovie:
+    put:
       tags:
         - QuanLyPhim
       operationId: CapNhatPhimUpload
       consumes:
         - multipart/form-data
-      produces: []
       parameters:
         - name: movieId
           in: query
           required: true
+          type: integer
+        - name: name
+          in: formData
+          required: true
           type: string
-        - name: fileUpload
+        - name: startDate
           in: formData
-          required: false
+          required: true
+          type: string
+        - name: time
+          in: formData
+          required: true
+          type: string
+        - name: evaluate
+          in: formData
+          required: true
+          type: integer
+        - name: poster
+          in: formData
+          required: true
           type: file
-        - name: dataMovie
+        - name: banner
           in: formData
-          required: false
-          type: array
-          items: {}
-          collectionFormat: multi
-          uniqueItems: false
+          required: true
+          type: file
+        - name: trailer
+          in: formData
+          required: true
+          type: string
         - name: AccessToken
           in: header
-          description: access token
           required: true
           type: string
       responses:
         "200":
           description: Success
-  "/api/movie/deleteMovie":
+  /api/movie/deleteMovie:
     delete:
       tags:
         - QuanLyPhim
@@ -399,7 +430,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/movie/getMovieById":
+  /api/movie/getMovieById:
     get:
       tags:
         - QuanLyPhim
@@ -416,7 +447,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/cinema/getCinemaById":
+  /api/cinema/getCinemaById:
     get:
       tags:
         - QuanLyRap
@@ -432,7 +463,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/cinema/getInfoCineplex":
+  /api/cinema/getInfoCineplex:
     get:
       tags:
         - QuanLyRap
@@ -448,7 +479,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/cinema/LayThongTinLichChieuHeThongRap":
+  /api/cinema/LayThongTinLichChieuHeThongRap:
     get:
       tags:
         - QuanLyRap
@@ -469,7 +500,7 @@ paths:
       responses:
         "200":
           description: Success
-  "/api/cinema/getMovieListFromCinema":
+  /api/cinema/getMovieListFromCinema:
     get:
       tags:
         - QuanLyRap
@@ -497,22 +528,20 @@ definitions:
         uniqueItems: false
         type: array
         items:
-          "$ref": "#/definitions/VeVM"
+          $ref: "#/definitions/VeVM"
   VeVM:
     type: string
   LichChieuInsert:
     type: object
     properties:
-      maPhim:
+      cinemaId:
         format: int32
         type: integer
-      ngayChieuGioChieu:
+      movieId:
+        format: int32
+        type: integer
+      startTime:
         type: string
-      maRap:
-        type: string
-      giaVe:
-        format: double
-        type: number
   ThongTinDangNhapVM:
     type: object
     properties:
@@ -521,7 +550,7 @@ definitions:
       password:
         type: string
   newUser:
-    type: object
+    type: string
     properties:
       userName:
         type: string
@@ -554,7 +583,7 @@ definitions:
         type: string
       avatar:
         type: string
-  KeyValuePair[String,StringValues]:
+  "KeyValuePair[String,StringValues]":
     type: object
     properties:
       key:

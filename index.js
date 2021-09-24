@@ -14,7 +14,7 @@ app.use("/public", express.static(pathPublicDirectory));
 
 const options = {
   swaggerDefinition: {
-    openapi: "3.0.6",
+    swagger: "2.0",
     info: {
       title: "Movie Api",
       version: "1.0.0",

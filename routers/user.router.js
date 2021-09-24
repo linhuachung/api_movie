@@ -124,14 +124,15 @@ userRouters.get(
   async (req, res) => {
     try {
       const { findUserName = "" } = req.query;
+      console.log(findUserName);
       if (!findUserName)
-        return res.status(RESPONSE_CODE.BAD_REQUEST).send("invalid user");
+        return res.status(RESPONSE_CODE.BAD_REQUEST).send("User không tồn tại");
 
       const user = await getUserByUserName(findUserName);
       if (!user)
         return res
           .status(RESPONSE_CODE.BAD_REQUEST)
-          .send(`user ${findUserName} is not exist`);
+          .send(`${findUserName} Không tồn tại`);
 
       res.send(user).status(RESPONSE_CODE.OK);
     } catch (error) {
@@ -169,19 +170,7 @@ userRouters.delete(
 
 userRouters.put("/updateUserByUsername", async (req, res) => {
   try {
-    const { findUserName = "" } = req.query;
-    if (!findUserName)
-      return res
-        .status(RESPONSE_CODE.BAD_REQUEST)
-        .send("Người dùng không hợp lệ");
-
-    const user = await getUserByUserName(findUserName);
-    if (!user)
-      return res
-        .status(RESPONSE_CODE.BAD_REQUEST)
-        .send(`${findUserName} không hợp lệ`);
     const {
-      id,
       userName,
       firstName,
       lastName,
@@ -195,7 +184,6 @@ userRouters.put("/updateUserByUsername", async (req, res) => {
 
     const hashPassword = bcryptjs.hashSync(password, salt);
     const newUserUpdate = {
-      id,
       userName,
       firstName,
       lastName,
@@ -205,12 +193,24 @@ userRouters.put("/updateUserByUsername", async (req, res) => {
       role,
       avatar,
     };
+
+    const findUserName = newUserUpdate.userName;
+    if (!findUserName)
+      return res
+        .status(RESPONSE_CODE.BAD_REQUEST)
+        .send("Người dùng không hợp lệ");
+
+    const user = await getUserByUserName(findUserName);
+    if (!user)
+      return res
+        .status(RESPONSE_CODE.BAD_REQUEST)
+        .send(`${findUserName} không hợp lệ`);
+
     if (req.body.userName !== findUserName)
       return res
         .status(RESPONSE_CODE.BAD_REQUEST)
         .send("Không thể thay đổi tài khoản");
     const userList = await getListUser();
-    console.log(newUserUpdate.email);
     const checkEmail = userList.findIndex(
       (user) => user.email === newUserUpdate.email
     );

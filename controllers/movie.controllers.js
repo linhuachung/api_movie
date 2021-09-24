@@ -57,6 +57,14 @@ const searchMovie = (data) => {
   `);
 };
 
+const getMovieByName = (movieName) => {
+  return Movie.findOne({
+    where: {
+      name: movieName,
+    },
+  });
+};
+
 module.exports = {
   getListMovie,
   getMovieById,
@@ -64,4 +72,5 @@ module.exports = {
   deleteMovie,
   updateMovie,
   searchMovie,
+  getMovieByName,
 };

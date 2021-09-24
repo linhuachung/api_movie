@@ -47,7 +47,7 @@ authRouter.post("/login", async (req, res) => {
 
 authRouter.post("/register", async (req, res) => {
   try {
-    let { id, userName, firstName, lastName, email, phoneNumber, password } =
+    let { userName, firstName, lastName, email, phoneNumber, password } =
       req.body;
     // băm password
     const salt = bcryptjs.genSaltSync();
@@ -55,7 +55,6 @@ authRouter.post("/register", async (req, res) => {
     const hashPassword = bcryptjs.hashSync(password, salt);
 
     const newUser = {
-      id,
       userName,
       firstName,
       lastName,

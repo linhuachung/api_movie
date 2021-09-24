@@ -7,6 +7,7 @@ const {
   getMovieById,
   updateMovie,
   searchMovie,
+  getMovieByName,
 } = require("../controllers/movie.controllers");
 const {
   uploadImageMovieMiddleWare,
@@ -78,36 +79,48 @@ movieRouters.post(
         banner: bannerMovie,
         trailer,
       };
+
+      const movieName = dataMovie.name;
+      const movieFind = await getListMovie();
+      const checkNameMovie = movieFind.findIndex(
+        (movie) => movie.name === movieName
+      );
       // validation giá trị
 
       if (dataMovie.name.trim() === "")
         return res.status(400).send("Tên phim không hợp lệ");
-      if (!dateValidation.test(dataMovie.startDate))
-        return res
-          .status(400)
-          .send("StartDate sai định dạng, định dạng hợp lệ: YYYY-MM-DD");
-      if (/\D/.test(dataMovie.time))
-        return res.status(400).send("Thời lượng phim không hợp lệ");
-      if (/\D/.test(dataMovie.evaluate))
-        return res.status(400).send("Đánh giá phim không hợp lệ");
-      if (dataMovie.poster.trim() === "")
-        return res.status(400).send("Poster phim sai định dạng");
-      if (dataMovie.banner.trim() === "")
-        return res.status(400).send("Banner phim sai định dạng");
-      if (dataMovie.trailer.trim() === "")
-        return res.status(400).send("Trailer phim không hợp lệ");
+      if (checkNameMovie === -1) {
+        if (!dateValidation.test(dataMovie.startDate))
+          return res
+            .status(400)
+            .send("StartDate sai định dạng, định dạng hợp lệ: YYYY-MM-DD");
+        if (/\D/.test(dataMovie.time))
+          return res.status(400).send("Thời lượng phim không hợp lệ");
+        if (/\D/.test(dataMovie.evaluate))
+          return res.status(400).send("Đánh giá phim không hợp lệ");
+        if (dataMovie.poster.trim() === "")
+          return res.status(400).send("Poster phim sai định dạng");
+        if (dataMovie.banner.trim() === "")
+          return res.status(400).send("Banner phim sai định dạng");
+        if (dataMovie.trailer.trim() === "")
+          return res.status(400).send("Trailer phim không hợp lệ");
 
-      const movieList = await createMovie(dataMovie);
-      res.status(RESPONSE_CODE.OK).send({
-        id: movieList.id,
-        name: movieList.name,
-        startDate: movieList.startDate,
-        time: movieList.time,
-        evaluate: movieList.evaluate,
-        poster: movieList.poster,
-        banner: movieList.banner,
-        trailer: movieList.trailer,
-      });
+        const movieList = await createMovie(dataMovie);
+        res.status(RESPONSE_CODE.OK).send({
+          id: movieList.id,
+          name: movieList.name,
+          startDate: movieList.startDate,
+          time: movieList.time,
+          evaluate: movieList.evaluate,
+          poster: movieList.poster,
+          banner: movieList.banner,
+          trailer: movieList.trailer,
+        });
+      } else {
+        return res
+          .status(RESPONSE_CODE.BAD_REQUEST)
+          .send("Tên Phim đã tồn tại");
+      }
     } catch (error) {
       console.log(error);
       res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
@@ -142,16 +155,15 @@ movieRouters.delete(
 );
 
 // Cập nhật phim
-movieRouters.post(
+movieRouters.put(
   "/updateMovie",
   authenticate,
   authorize("QuanTri"),
   uploadImageMovieMiddleWare(),
   async (req, res) => {
     try {
-      const { movieId = "" } = req.query;
       const { name, startDate, time, evaluate, trailer } = req.body;
-
+      const { movieId = "" } = req.query;
       let file = req.files;
       let posterImg = file.poster.map((item) => {
         return item.path;
@@ -171,10 +183,15 @@ movieRouters.post(
         trailer,
       };
 
+      const movieName = dataMovie.name;
+      const listMovie = await getListMovie();
+      const movieFindById = await getMovieById(movieId);
+      const findIndexMovie = listMovie.findIndex(
+        (movie) => movie.name === movieName
+      );
       if (!movieId)
         return res.status(RESPONSE_CODE.BAD_REQUEST).send("Phim không hợp lệ");
-      const movie = await getMovieById(movieId);
-      if (!movie)
+      if (!movieFindById)
         return res
           .status(RESPONSE_CODE.BAD_REQUEST)
           .send(`Movie ${movieId} is not exist`);
@@ -183,21 +200,25 @@ movieRouters.post(
 
       if (dataMovie.name.trim() === "")
         return res.status(400).send("Tên phim không hợp lệ");
-      if (!dateValidation.test(dataMovie.startDate))
-        return res.status(400).send("StartDate sai định dạng");
-      if (/\D/.test(dataMovie.time))
-        return res.status(400).send("Thời lượng phim không hợp lệ");
-      if (/\D/.test(dataMovie.evaluate))
-        return res.status(400).send("Đánh giá phim không hợp lệ");
-      if (dataMovie.poster.trim() === "")
-        return res.status(400).send("Poster phim sai định dạng");
-      if (dataMovie.banner.trim() === "")
-        return res.status(400).send("Banner phim sai định dạng");
-      if (dataMovie.trailer.trim() === "")
-        return res.status(400).send("Trailer phim không hợp lệ");
+      if (findIndexMovie === -1 || movieName === movieFindById.name) {
+        if (!dateValidation.test(dataMovie.startDate))
+          return res.status(400).send("StartDate sai định dạng");
+        if (/\D/.test(dataMovie.time))
+          return res.status(400).send("Thời lượng phim không hợp lệ");
+        if (/\D/.test(dataMovie.evaluate))
+          return res.status(400).send("Đánh giá phim không hợp lệ");
+        if (dataMovie.poster.trim() === "")
+          return res.status(400).send("Poster phim sai định dạng");
+        if (dataMovie.banner.trim() === "")
+          return res.status(400).send("Banner phim sai định dạng");
+        if (dataMovie.trailer.trim() === "")
+          return res.status(400).send("Trailer phim không hợp lệ");
 
-      await updateMovie(movieId, dataMovie);
-      res.status(RESPONSE_CODE.OK).send("Cập nhật phim thành công");
+        await updateMovie(movieId, dataMovie);
+        res.status(RESPONSE_CODE.OK).send("Cập nhật phim thành công");
+      } else {
+        res.status(RESPONSE_CODE.BAD_REQUEST).send("Tên phim đã tồn tại");
+      }
     } catch (error) {
       console.log(error);
       res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
