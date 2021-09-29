@@ -18,9 +18,19 @@ const uploadAvatarUserMiddleWare = () => {
 const uploadImageMovieMiddleWare = () => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      file.fieldname === "banner"
-        ? cb(null, "./public/images/MovieBanner")
-        : cb(null, "./public/images/MoviePoster");
+      console.log(cb);
+      if (
+        file.mimetype === "image/png" ||
+        file.mimetype === "image/jpeg" ||
+        file.mimetype == "image/jpg"
+      ) {
+        file.fieldname === "banner"
+          ? cb(null, "./public/images/MovieBanner")
+          : cb(null, "./public/images/MoviePoster");
+      } else {
+        return cb(new Error("Chỉ nhận file có định dạng .png, .jpg and .jpeg")); // return req.status(400).send("Bad");
+        return;
+      }
     },
     filename: (req, file, cb) => {
       cb(null, `${Date.now()}_${file.originalname}`);
