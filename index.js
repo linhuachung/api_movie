@@ -33,6 +33,8 @@ app.use("/api", rootRouter);
 const swaggerSpecs = swaggerJSDoc(options);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
-app.listen(config.serverPort, () => {
-  console.log(`App running on port ${config.serverPort}`);
+const PORT = config.serverPort;
+
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}`);
 });
