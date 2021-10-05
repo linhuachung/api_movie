@@ -1,0 +1,932 @@
+{
+	"info": {
+		"_postman_id": "eb8d92c4-0fb8-4f3c-bd17-09c89177bf79",
+		"name": "movie_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Manager",
+			"item": [
+				{
+					"name": "GetListUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NDA3MiwiZXhwIjoxNjMzMzUwNDcyfQ.NJ9YuVyBfs5zyigqhTV-IxBUFrWTDx4UcoOStlTKXqw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/user/getUser",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"getUser"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetuserByUserName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NDA3MiwiZXhwIjoxNjMzMzUwNDcyfQ.NJ9YuVyBfs5zyigqhTV-IxBUFrWTDx4UcoOStlTKXqw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/user/getUserByUserName?findUserName=admin",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"getUserByUserName"
+							],
+							"query": [
+								{
+									"key": "findUserName",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NDQ0MSwiZXhwIjoxNjMzMzUwODQxfQ.qE2VZuQ4ioBbRv8ybZNdWwfJR-8o5VbQfR8lnI3xokk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/user//deleteUser?findUserName=userTestRegister5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"",
+								"deleteUser"
+							],
+							"query": [
+								{
+									"key": "findUserName",
+									"value": "userTestRegister5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMTc1OTg5OSwiZXhwIjoxNjMxODQ2Mjk5fQ.UmnTL2FAVbaqGU9FhPyZmewbGNOSNHw8oHWPo0SCQeM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n      \"userName\":\"User3\",\r\n      \"firstName\":\"User3\",\r\n      \"lastName\":\"User3\",\r\n      \"email\":\"Use3@gmail.com\",\r\n      \"phoneNumber\":\"123456789\",\r\n      \"password\":\"1304\",\r\n      \"role\":\"KhachHang\",\r\n      \"avatar\":\"\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/user/createUser",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"createUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"userName\":\"user1\",\r\n      \"firstName\":\"user1\",\r\n      \"lastName\":\"user1\",\r\n      \"email\":\"user1@gamil.com\",\r\n      \"phoneNumber\":\"123456789\",\r\n      \"password\":\"1304\",\r\n      \"role\":\"QuanTri\",\r\n      \"avatar\":\"\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/user/updateUserByUsername=user1?",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"updateUserByUsername=user1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n      \"userName\":\"admin\",   \r\n      \"password\":\"1304\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/author/login",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"author",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UploadAvatar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhc2Zhc2RmQGdtYWlsLmNvbSIsInJvbGUiOiJLaGFjaEhhbmciLCJpYXQiOjE2MzMyNjQ2NDEsImV4cCI6MTYzMzM1MTA0MX0.M5I0v_Rt1MqBX93ieCJ7bxyArew1tokIkMeRRhXzbc8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/huach/OneDrive/Desktop/_MG_2513-min.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/user/avatar?userName=userTestRegister5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"avatar"
+							],
+							"query": [
+								{
+									"key": "userName",
+									"value": "userTestRegister5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n      \"userName\":\"userTestRegister5\",\r\n      \"firstName\":\"user7\",\r\n      \"lastName\":\"user7\",\r\n      \"email\":\"asfasdf@gmail.com\",\r\n      \"phoneNumber\":\"123456789\",\r\n      \"password\":\"1234\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/author/register",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"author",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetListUserPagination",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NTE5OSwiZXhwIjoxNjMzMzUxNTk5fQ.8ORndq0sbuv6BLw1Wn39S_OI4GDF_iwhRg1UQas9E9E",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/user/paginationUserList?page=1&limit=2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"paginationUserList"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie Manager",
+			"item": [
+				{
+					"name": "CreateMovie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NTE5OSwiZXhwIjoxNjMzMzUxNTk5fQ.8ORndq0sbuv6BLw1Wn39S_OI4GDF_iwhRg1UQas9E9E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test23",
+									"type": "text"
+								},
+								{
+									"key": "startDate",
+									"value": "2021-10-30",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "150",
+									"type": "text"
+								},
+								{
+									"key": "evaluate",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "trailer",
+									"value": "asdsadasdasd",
+									"type": "text"
+								},
+								{
+									"key": "banner",
+									"type": "file",
+									"src": "/C:/Users/huach/OneDrive/Desktop/_MG_2513-min.jpg"
+								},
+								{
+									"key": "poster",
+									"type": "file",
+									"src": "/C:/Users/huach/OneDrive/Desktop/_MG_2513-min.jpg"
+								},
+								{
+									"key": "hot",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "isStart",
+									"value": "true",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/movie/createMovie",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"movie",
+								"createMovie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetListMovie",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyNkBnYW1pLmNvbSIsInJvbGUiOiJRdWFuVHJpIiwiaWF0IjoxNjMxMzYyMzY2LCJleHAiOjE2MzE0NDg3NjZ9.0LYXXy9B3Z7vm40JpN99m6FpvuoncQQQqDcOqX4d-wk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/user/getUser",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"getUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMovieById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NTE5OSwiZXhwIjoxNjMzMzUxNTk5fQ.8ORndq0sbuv6BLw1Wn39S_OI4GDF_iwhRg1UQas9E9E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "sdfsdf",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "dsfsdffs",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "fsdfdsfsdfsd",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "sdfsdfsd",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "sdfsdfsd",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain}}/api/movie/getMovieById?movieId=2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"movie",
+								"getMovieById"
+							],
+							"query": [
+								{
+									"key": "movieId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteMovie",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NTE5OSwiZXhwIjoxNjMzMzUxNTk5fQ.8ORndq0sbuv6BLw1Wn39S_OI4GDF_iwhRg1UQas9E9E",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/movie/deleteMovie?movieId=1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"movie",
+								"deleteMovie"
+							],
+							"query": [
+								{
+									"key": "movieId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMovie",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NTE5OSwiZXhwIjoxNjMzMzUxNTk5fQ.8ORndq0sbuv6BLw1Wn39S_OI4GDF_iwhRg1UQas9E9E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "startDate",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "evaluate",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "trailer",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "banner",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "poster",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/movie/updateMovie?movieId=1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"movie",
+								"updateMovie"
+							],
+							"query": [
+								{
+									"key": "movieId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchMovie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"adsfads afddafa adfdaf \",\r\n      \"startDate\":\"2021-12-13\",\r\n      \"time\": 3,\r\n      \"evaluate\":10,\r\n      \"poster\":\"TestMovie1\",\r\n      \"banner\":\"TestMovie1\",\r\n      \"trailer\":\"TestMovie1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/movie/searchMovie?movieName=Test1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"movie",
+								"searchMovie"
+							],
+							"query": [
+								{
+									"key": "movieName",
+									"value": "Test1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetListMoviePagination",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c2VyNkBnYW1pLmNvbSIsInJvbGUiOiJRdWFuVHJpIiwiaWF0IjoxNjMxMzYyMzY2LCJleHAiOjE2MzE0NDg3NjZ9.0LYXXy9B3Z7vm40JpN99m6FpvuoncQQQqDcOqX4d-wk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/movie/paginationMovieList?page=2&limit=2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"movie",
+								"paginationMovieList"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cinema Manager",
+			"item": [
+				{
+					"name": "GetCinemaList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/cinema/getCinemaList",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cinema",
+								"getCinemaList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCineplexList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/cinema/getInfoCineplex",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cinema",
+								"getInfoCineplex"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCineplexById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/cinema/getInfoCineplexById=2",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cinema",
+								"getInfoCineplexById=2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCinemaByid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/cinema/getCinemaList",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cinema",
+								"getCinemaList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Cinema",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/cinema/searchCinema?searchData=",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"cinema",
+								"searchCinema"
+							],
+							"query": [
+								{
+									"key": "searchData",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMovieListFormCinema",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket Manager",
+			"item": [
+				{
+					"name": "CreateShowtime",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "AccessToken",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NTE5OSwiZXhwIjoxNjMzMzUxNTk5fQ.8ORndq0sbuv6BLw1Wn39S_OI4GDF_iwhRg1UQas9E9E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cinemaId\":\"1\",\r\n    \"movieId\": \"2\",\r\n    \"startTime\": \"2021-09-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/ticket/createShowTime",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"ticket",
+								"createShowTime"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetShowTimeById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cinemaId\":\"1\",\r\n    \"startTime\": \"2021-09-15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/ticket/createShowTime",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"ticket",
+								"createShowTime"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoiS2hhY2hIYW5nIiwiaWF0IjoxNjMxODg0NDE5LCJleHAiOjE2MzE5NzA4MTl9.Uq1yaUg7bZvnpqMISr5qOIXzFX098S5s71WkdQ9hq2o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showtimeId\": \"\",      \r\n    \"seatId\": [\r\n        \r\n    ]    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/ticket/booking",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"ticket",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "AccessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUXVhblRyaSIsImlhdCI6MTYzMzI2NDA3MiwiZXhwIjoxNjMzMzUwNDcyfQ.NJ9YuVyBfs5zyigqhTV-IxBUFrWTDx4UcoOStlTKXqw",
+			"disabled": true
+		}
+	]
+}

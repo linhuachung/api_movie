@@ -243,12 +243,13 @@ userRouters.post(
   uploadAvatarUserMiddleWare(),
   async (req, res) => {
     try {
-      const userId = req.user.id;
+      const { userName = "" } = req.query;
       const { file } = req;
       const avatarUrl = "http://localhost:3000/" + file.path;
-      await uploadAvatarUser(userId, avatarUrl);
+      await uploadAvatarUser(userName, avatarUrl);
       res.send("Upload successful").status(RESPONSE_CODE.OK);
     } catch (error) {
+      console.log(error);
       res.send("Upload error").status(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
     }
   }

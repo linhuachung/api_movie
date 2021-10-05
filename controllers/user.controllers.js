@@ -36,8 +36,8 @@ const getUserByUserName = (userName) => {
   });
 };
 
-const uploadAvatarUser = (userId, avatarUrl) => {
-  return User.update({ avatar: avatarUrl }, { where: { id: userId } });
+const uploadAvatarUser = (userName, avatarUrl) => {
+  return User.update({ avatar: avatarUrl }, { where: { userName: userName } });
 };
 
 const registerUser = (newUser) => {

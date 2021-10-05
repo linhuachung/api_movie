@@ -16,21 +16,25 @@ const { createDataSeat } = require("../utils/seatData");
 const ticketRouters = express.Router();
 
 // create showtime
-ticketRouters.post("/createShowTime", async (req, res) => {
-  try {
-    const { startTime, cinemaId, movieId } = req.body;
-    const dataShowTime = { startTime, cinemaId, movieId };
-    const data = await createShowTimeController(dataShowTime);
+ticketRouters.post(
+  "/createShowTime",
+  authenticate,
+  authorize("QuanTri"),
+  async (req, res) => {
+    try {
+      const { startTime, cinemaId, movieId } = req.body;
+      const dataShowTime = { startTime, cinemaId, movieId };
+      const data = await createShowTimeController(dataShowTime);
 
-    const seatData = createDataSeat(data.id);
-    const seatList = await createSeatForShowTime(seatData);
-    res.status(RESPONSE_CODE.OK).send({ data, seatList });
-    console.log(seatData.showtimeId);
-  } catch (error) {
-    console.log(error);
-    res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
+      const seatData = createDataSeat(data.id);
+      const seatList = await createSeatForShowTime(seatData);
+      res.status(RESPONSE_CODE.OK).send({ data, seatList });
+      console.log(seatData.showtimeId);
+    } catch (error) {
+      res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
+    }
   }
-});
+);
 
 // get showtime by Id
 
@@ -40,7 +44,6 @@ ticketRouters.get("/getShowTime", async (req, res) => {
     const data = await getShowTimeList(showTimeId);
     res.status(RESPONSE_CODE.OK).send(data);
   } catch (error) {
-    console.log(error);
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
   }
 });
@@ -100,7 +103,6 @@ ticketRouters.post(
       await updateSeat(seatData, seatId);
       res.status(RESPONSE_CODE.OK).send("Đặt thành công");
     } catch (error) {
-      console.log(error);
       res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
     }
   }

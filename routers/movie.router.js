@@ -7,7 +7,6 @@ const {
   getMovieById,
   updateMovie,
   searchMovie,
-  getMovieByName,
 } = require("../controllers/movie.controllers");
 const {
   uploadImageMovieMiddleWare,
@@ -48,6 +47,7 @@ movieRouters.get("/getMovieById", async (req, res) => {
     const movieList = await getListMovie();
     res.status(RESPONSE_CODE.OK).send(movieList);
   } catch (error) {
+    console.log(error);
     res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
   }
 });
@@ -60,7 +60,8 @@ movieRouters.post(
   uploadImageMovieMiddleWare(),
   async (req, res) => {
     try {
-      const { name, startDate, time, evaluate, trailer } = req.body;
+      const { name, startDate, time, evaluate, trailer, hot, isStart } =
+        req.body;
       let file = req.files;
       let posterImg = file.poster.map((item) => {
         return item.path;
@@ -78,8 +79,11 @@ movieRouters.post(
         poster: posterMovie,
         banner: bannerMovie,
         trailer,
+        hot,
+        isStart,
       };
-
+      console.log(hot);
+      console.log(isStart);
       const movieName = dataMovie.name;
       const movieFind = await getListMovie();
       const checkNameMovie = movieFind.findIndex(
@@ -143,11 +147,11 @@ movieRouters.delete(
       if (!movie)
         return res
           .status(RESPONSE_CODE.BAD_REQUEST)
-          .send(`Movie ${movieId} is not exist`);
+          .send(`Movie ${movieId} không tồn tại`);
 
       await deleteMovie(movieId);
 
-      res.send(`Movie id: ${movieId} has been delete`).status(RESPONSE_CODE.OK);
+      res.send(`Movie id: ${movieId} đã xóa`).status(RESPONSE_CODE.OK);
     } catch (error) {
       res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).send(error);
     }
@@ -162,7 +166,8 @@ movieRouters.put(
   uploadImageMovieMiddleWare(),
   async (req, res) => {
     try {
-      const { name, startDate, time, evaluate, trailer } = req.body;
+      const { name, startDate, time, evaluate, trailer, hot, isStart } =
+        req.body;
       const { movieId = "" } = req.query;
       let file = req.files;
       let posterImg = file.poster.map((item) => {
@@ -181,6 +186,8 @@ movieRouters.put(
         poster: posterMovie,
         banner: bannerMovie,
         trailer,
+        hot,
+        isStart,
       };
 
       const movieName = dataMovie.name;
