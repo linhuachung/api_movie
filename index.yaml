@@ -479,27 +479,6 @@ paths:
       responses:
         "200":
           description: Success
-  /api/cinema/LayThongTinLichChieuHeThongRap:
-    get:
-      tags:
-        - QuanLyRap
-      operationId: LayThongTinLichChieuHeThongRap
-      consumes: []
-      produces: []
-      parameters:
-        - name: maHeThongRap
-          in: query
-          required: false
-          type: string
-          default: ""
-        - name: maNhom
-          in: query
-          required: false
-          type: string
-          default: GP01
-      responses:
-        "200":
-          description: Success
   /api/cinema/getMovieListFromCinema:
     get:
       tags:
